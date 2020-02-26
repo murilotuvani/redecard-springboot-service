@@ -1,0 +1,5 @@
+br\com\transacao\transacaows\TransacaoWsApplication.class
+br\com\transacao\transacaows\TransacaoController.class
+br\com\transacao\transacaows\Transacao.class
+br\com\transacao\transacaows\TipoCaptura.class
+br\com\transacao\transacaows\TransacaoService.class
