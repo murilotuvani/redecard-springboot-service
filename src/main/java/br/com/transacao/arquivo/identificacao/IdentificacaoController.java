@@ -40,8 +40,8 @@ public class IdentificacaoController {
 
 	@RequestMapping("/total")
 	public ResponseEntity<List<Identificacao>> addFileReceber() {
-		List<Identificacao> listPagamentoReceber = identificacaoService.receberArquivo();
-		return ResponseEntity.ok(listPagamentoReceber);
+		List<Identificacao> listaArquivos = identificacaoService.receberArquivo();
+		return ResponseEntity.ok(listaArquivos);
 	}
 
 }

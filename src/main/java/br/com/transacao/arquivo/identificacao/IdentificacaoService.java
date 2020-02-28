@@ -15,13 +15,12 @@ import br.com.autogeral.redecard.RegistroRedecard;
 public class IdentificacaoService {
 
 	@Autowired
-	private IdentificacaoRepository pagamentoReceberRepository;
+	private IdentificacaoRepository identificacaoRepository;
 
 	List<Identificacao> identificados = new ArrayList<Identificacao>();
 
 	public List<Identificacao> list() {
-		// TODO Auto-generated method stub
-		return null;
+		return identificacaoRepository.findAll();
 	}
 
 	public List<Identificacao> receberArquivo() {
@@ -40,6 +39,6 @@ public class IdentificacaoService {
 
 	private void preencheObjetoReceber(List<RegistroRedecard> listComprovantes) {
 		// TODO Auto-generated method stub
-		pagamentoReceberRepository.toString();
+		identificacaoRepository.toString();
 	}
 }
