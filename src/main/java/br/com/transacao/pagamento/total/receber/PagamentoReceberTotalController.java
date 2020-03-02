@@ -36,10 +36,6 @@ public class PagamentoReceberTotalController {
 		return "Hello World";
 	}
 	
-	@RequestMapping("/total")
-	public ResponseEntity<List<PagamentoReceberTotal>> addFileReceber() {
-		List<PagamentoReceberTotal> listPagamentoReceber = pagamentoReceberTotalService.receberTotal();
-		return ResponseEntity.ok(listPagamentoReceber);
-	}
+
 
 }

@@ -36,10 +36,6 @@ public class TransacaoController {
 
 	}
 
-	@RequestMapping("/venda")
-	public ResponseEntity<List<Transacao>> addFilePagamentos() {
-		List<Transacao> listaTransacoesAdicionadas = transacaoService.transacoes();
-		return ResponseEntity.ok(listaTransacoesAdicionadas);
-	}
+	
 
 }

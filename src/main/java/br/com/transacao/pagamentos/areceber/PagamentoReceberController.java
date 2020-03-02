@@ -36,10 +36,5 @@ public class PagamentoReceberController {
 		return "Hello world";
 	}
 
-	@RequestMapping("/receber")
-	public ResponseEntity<List<PagamentoReceber>> addFileReceber() {
-		List<PagamentoReceber>listPagamentoReceber = pagamentoReceberService.receber();
-		return ResponseEntity.ok(listPagamentoReceber);
-	}
 
 }

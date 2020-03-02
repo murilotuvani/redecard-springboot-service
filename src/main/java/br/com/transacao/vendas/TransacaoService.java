@@ -1,15 +1,12 @@
 package br.com.transacao.vendas;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.autogeral.redecard.Leitor;
 import br.com.autogeral.redecard.RegistroRedecard;
 import br.com.autogeral.redecard.eevc.Registro008CVnsuRotativo;
 import br.com.autogeral.redecard.eevc.Registro12CVnsuparceladosemJuros;
@@ -28,29 +25,11 @@ public class TransacaoService {
 		return transacaoRepository.findAll();
 	}
 
-	public List<Transacao> transacoes() {
-
-		List<RegistroRedecard> listComprovantes;
-		File diretorio = new File("C:\\Users\\kaique.mota\\Documents\\Tivit_05022020_211715");
-		Leitor leitor = new Leitor();
-		leitor.defineLeituraArquivo(diretorio);
-
-		listComprovantes = Leitor.registros.stream().filter(
-				c -> c.getTipoRegistro().equals(12) || c.getTipoRegistro().equals(8) || c.getTipoRegistro().equals(5))
-				.collect(Collectors.toList());
-
-		preencheObjetoTransacao(listComprovantes);
-
-		return transacoesSalvas;
-	}
-
-	private void preencheObjetoTransacao(List<RegistroRedecard> list) {
-
+	public void preencheObjetoTransacao(List<RegistroRedecard> list) {
 		for (RegistroRedecard r : list) {
-
 			if (r instanceof Registro12CVnsuparceladosemJuros) {
-
 				Registro12CVnsuparceladosemJuros r12 = (Registro12CVnsuparceladosemJuros) r;
+
 				Transacao t = new Transacao();
 				t.setTipoRegistro(r12.getTipoRegistro());
 				t.setNumeroPontoVenda(r12.getNumeroPV());
@@ -68,12 +47,11 @@ public class TransacaoService {
 				t.setNumeroCartao(r12.getNumeroCartao());
 				t.setNumeroTerminal(r12.getNumeroTerminal());
 				t.setTipoCaptura(r12.getTipoCaptura());
-				transacaoRepository.save(t);
 				transacoesSalvas.add(t);
 
 			} else if (r instanceof Registro008CVnsuRotativo) {
-
 				Registro008CVnsuRotativo r8 = (Registro008CVnsuRotativo) r;
+
 				Transacao t = new Transacao();
 				t.setTipoRegistro(r8.getTipoRegistro());
 				t.setNumeroPontoVenda(r8.getNumeroPV());
@@ -88,11 +66,10 @@ public class TransacaoService {
 				t.setNumeroCartao(r8.getNumeroCartao());
 				t.setNumeroTerminal(r8.getNumeroTerminal());
 				t.setTipoCaptura(r8.getTipoCaptura());
-				transacaoRepository.save(t);
 				transacoesSalvas.add(t);
 			} else if (r instanceof RegistroTipo05DetalhamentoComprovantes) {
-
 				RegistroTipo05DetalhamentoComprovantes r5 = (RegistroTipo05DetalhamentoComprovantes) r;
+
 				Transacao t = new Transacao();
 				t.setTipoRegistro(r5.getTipoRegistro());
 				t.setNumeroPontoVenda(r5.getNumeroFiliacaoPontovenda());
@@ -108,10 +85,10 @@ public class TransacaoService {
 				t.setNumeroTerminal(r5.getNumeroTerminal());
 				t.setTipoCaptura(Integer.toString(r5.getTipoCaptura()));
 				t.setDataCredito(r5.getDataCredito());
-				transacaoRepository.save(t);
 				transacoesSalvas.add(t);
 			}
 		}
+		transacaoRepository.saveAll(transacoesSalvas);
 	}
 
 }
