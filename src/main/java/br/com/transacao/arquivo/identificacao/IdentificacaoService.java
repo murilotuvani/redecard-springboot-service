@@ -2,6 +2,8 @@ package br.com.transacao.arquivo.identificacao;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,26 +35,68 @@ public class IdentificacaoService {
 	@Autowired
 	private TransacaoService transacaoService;
 	@Autowired
-	private IdentificaoRepository identificacaoRepository;
+	private IdentificaoFileRepository identificacaoFileRepository;
+	@Autowired
+	private IdentificacaoRepository identificacaoRepository;
 
 	private List<RegistroRedecard> recebimentoPagamentoTotal = new ArrayList<RegistroRedecard>();
 	private List<RegistroRedecard> pagamentosProcessados = new ArrayList<RegistroRedecard>();
 	private List<RegistroRedecard> recimentoPagamento = new ArrayList<RegistroRedecard>();
 	private Leitor leitor = new Leitor();
-	 List<RegistroRedecard> listComprovantes = new ArrayList<RegistroRedecard>();
-	 List<IdentificacaoFile> identificaoArquivo = new ArrayList<IdentificacaoFile>();
+	private List<Identificacao> arquivosRecebidos = new ArrayList<Identificacao>();
+	private List<File> arquivosRecebidosfile = new ArrayList<File>();
+	private List<RegistroRedecard> listComprovantes = new ArrayList<RegistroRedecard>();
+	private List<IdentificacaoFile> identificaoArquivo = new ArrayList<IdentificacaoFile>();
+	private final String DIRETORIO_RAIZ = "C:\\\\Users\\\\kaique.mota\\\\Desktop\\\\Diretorio\\\\";
+	private boolean criaRegistros = false;
 
-	public void receberArquivo() {
-
-		File diretorio = new File("C:\\Users\\kaique.mota\\Documents\\Tivit_05022020_211715");
-		leitor.defineLeituraArquivo(diretorio);
-		listComprovantes = Leitor.registros.stream().collect(Collectors.toList());
-		vefificaExistencia(listComprovantes);
-		definindoLeituraArquivos(listComprovantes);
-
+	public List<Identificacao> list() {
+		return identificacaoRepository.findAll();
 	}
 
-	private void vefificaExistencia(List<RegistroRedecard> listComprovantes2) {
+	public void receberArquivo() {
+		List<Identificacao> arquivosJaSalvos = new ArrayList<Identificacao>();
+		List<File> diretorios = new ArrayList<File>();
+		arquivosJaSalvos = list();
+
+		File dir = new File(DIRETORIO_RAIZ);
+
+		if (dir.exists()) {
+
+			File[] files = dir.listFiles();
+
+			if (files.length > 0) {
+				for (File f : files) {
+					Identificacao iden = new Identificacao();
+					File diretorio = new File(DIRETORIO_RAIZ + f.getName());
+					iden.setDiretorio(f.getName());
+					arquivosRecebidos.add(iden);
+					arquivosRecebidosfile.add(diretorio);
+				}
+				Iterator iteretorRecebidos = arquivosRecebidos.iterator();
+				criaRegistros = Collections.disjoint(arquivosRecebidos, arquivosJaSalvos);
+			} else {
+				System.out.println("Diretorio esta vazio!");
+			}
+		} else {
+			System.out.println("Diretorio nao existe!");
+		}
+		if (criaRegistros) {
+			for (File f : arquivosRecebidosfile) {
+				leitor.defineLeituraArquivo(f);
+				listComprovantes = Leitor.registros.stream().collect(Collectors.toList());
+				salvaHeaderArquivos(listComprovantes);
+				definindoLeituraArquivos(listComprovantes);
+			}
+			saveAll(arquivosRecebidos);
+		}
+	}
+
+	private void saveAll(List<Identificacao> arquivosRecebidos2) {
+		identificacaoRepository.saveAll(arquivosRecebidos2);
+	}
+
+	private void salvaHeaderArquivos(List<RegistroRedecard> listComprovantes2) {
 		List<RegistroRedecard> rd = new ArrayList<RegistroRedecard>();
 
 		rd = Leitor.registros.stream()
@@ -100,7 +144,7 @@ public class IdentificacaoService {
 					identificaoArquivo.add(id);
 				}
 			}
-			identificacaoRepository.saveAll(identificaoArquivo);
+			identificacaoFileRepository.saveAll(identificaoArquivo);
 		}
 	}
 

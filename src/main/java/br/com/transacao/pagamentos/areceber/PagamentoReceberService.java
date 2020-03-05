@@ -28,7 +28,7 @@ public class PagamentoReceberService {
 			PagamentoReceber p = new PagamentoReceber();
 
 			p.setTipoRegistro(r34.getTipoRegistro());
-			p.setNumeroPVcentralizador(r34.getNumeroPVcentralizador());
+			p.setNumeroPontoVendacentralizador(r34.getNumeroPVcentralizador());
 			p.setNumeroDocumento(r34.getNumeroDocumento());
 			p.setDataLancamento(r34.getDataLancamento());
 			p.setValorLancamento(r34.getValorLancamento());
@@ -37,7 +37,7 @@ public class PagamentoReceberService {
 			p.setAgencia(r34.getAgencia());
 			p.setContaCorrente(r34.getContaCorrente());
 			p.setDataMovimento(r34.getDataMovimento());
-			p.setNumeroRV(r34.getNumeroRV());
+			p.setNumeroResumoVendas(r34.getNumeroRV());
 			p.setDataRV(r34.getDataRV());
 			p.setBandeira(r34.getBandeira());
 			p.setTipoTransacao(r34.getTipoTransacao());
@@ -45,7 +45,7 @@ public class PagamentoReceberService {
 			p.setValorTaxaDesconto(r34.getValorTaxaDesconto());
 			p.setNumeroParcelaTotal(r34.getNumeroParcelaTotal());
 			p.setStatusCredito(r34.getStatusCredito());
-			p.setNumeroPVoriginal(r34.getNumeroPVoriginal());
+			p.setNumeroPontoVendacentralizador(r34.getNumeroPVoriginal());
 			recebimentosSalvos.add(p);
 		}
 		pagamentoReceberRepository.saveAll(recebimentosSalvos);

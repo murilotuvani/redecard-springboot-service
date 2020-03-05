@@ -26,17 +26,14 @@ public class PagamentoReceberTotalService {
 
 			PagamentoReceberTotal t = new PagamentoReceberTotal();
 			t.setTipoRegistro(r037.getTipoRegistro());
-			t.setNumeroPV(r037.getNumeroPV());
+			t.setCodigoPontoVenda(r037.getNumeroPV());
 			t.setDataCredito(r037.getDataCredito());
 			t.setValorTotalCredito(r037.getValorTotalCredito());
 			t.setNumeroBanco(r037.getNumeroBanco());
 			t.setNumeroAgencia(r037.getNumeroAgencia());
-			t.setBrancos(r037.getBrancos());
-			t.setBrancos2(r037.getBrancos2());
 			t.setNumeroContaCorrente(r037.getNumeroContaCorrente());
 			t.setDataGeracaoArquivo(r037.getDataGeracaoArquivo());
 			t.setDataCreditoAntecipado(t.converteData(r037.getDataCreditoAntecipado()));
-			t.setValorTotalCreditos(r037.getValorTotalCreditos());
 			recebimentosSalvos.add(t);
 		}
 		pagamentoReceberRepository.saveAll(recebimentosSalvos);

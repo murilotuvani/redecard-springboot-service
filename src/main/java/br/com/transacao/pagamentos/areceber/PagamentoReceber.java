@@ -16,7 +16,7 @@ public class PagamentoReceber {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long pagamentoReceberId;
 	private Integer tipoRegistro;
-	private Integer numeroPVcentralizador;
+	private Integer numeroPontoVendacentralizador;
 	private Long numeroDocumento;
 	private Date dataLancamento;
 	private Double valorLancamento;
@@ -25,7 +25,7 @@ public class PagamentoReceber {
 	private Integer agencia;
 	private Integer contaCorrente;
 	private Date dataMovimento;
-	private Integer numeroRV;
+	private Integer numeroResumoVendas;
 	private Date dataRV;
 	private String bandeira;
 	private Integer tipoTransacao;
@@ -33,7 +33,7 @@ public class PagamentoReceber {
 	private Double valorTaxaDesconto;
 	private String numeroParcelaTotal;
 	private String statusCredito;
-	private Integer numeroPVoriginal;
+	private Integer numeroPontoVendaoriginal;
 
 	public Long getPagamentoReceberId() {
 		return pagamentoReceberId;
@@ -51,13 +51,7 @@ public class PagamentoReceber {
 		this.tipoRegistro = tipoRegistro;
 	}
 
-	public Integer getNumeroPVcentralizador() {
-		return numeroPVcentralizador;
-	}
 
-	public void setNumeroPVcentralizador(Integer numeroPVcentralizador) {
-		this.numeroPVcentralizador = numeroPVcentralizador;
-	}
 
 	public Long getNumeroDocumento() {
 		return numeroDocumento;
@@ -123,13 +117,7 @@ public class PagamentoReceber {
 		this.dataMovimento = dataMovimento;
 	}
 
-	public Integer getNumeroRV() {
-		return numeroRV;
-	}
 
-	public void setNumeroRV(Integer numeroRV) {
-		this.numeroRV = numeroRV;
-	}
 
 	public Date getDataRV() {
 		return dataRV;
@@ -187,12 +175,29 @@ public class PagamentoReceber {
 		this.statusCredito = statusCredito;
 	}
 
-	public Integer getNumeroPVoriginal() {
-		return numeroPVoriginal;
+	public Integer getNumeroPontoVendacentralizador() {
+		return numeroPontoVendacentralizador;
 	}
 
-	public void setNumeroPVoriginal(Integer numeroPVoriginal) {
-		this.numeroPVoriginal = numeroPVoriginal;
+	public void setNumeroPontoVendacentralizador(Integer numeroPontoVendacentralizador) {
+		this.numeroPontoVendacentralizador = numeroPontoVendacentralizador;
 	}
+
+	public Integer getNumeroResumoVendas() {
+		return numeroResumoVendas;
+	}
+
+	public void setNumeroResumoVendas(Integer numeroResumoVendas) {
+		this.numeroResumoVendas = numeroResumoVendas;
+	}
+
+	public Integer getNumeroPontoVendaoriginal() {
+		return numeroPontoVendaoriginal;
+	}
+
+	public void setNumeroPontoVendaoriginal(Integer numeroPontoVendaoriginal) {
+		this.numeroPontoVendaoriginal = numeroPontoVendaoriginal;
+	}
+
 
 }

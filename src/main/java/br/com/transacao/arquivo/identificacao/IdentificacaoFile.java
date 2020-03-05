@@ -24,7 +24,7 @@ public class IdentificacaoFile {
     private String tipoProcessamento;
     private String versaoArquivo;
     
-    
+   
     
 	public Integer getIdIdentificaoFile() {
 		return idIdentificaoFile;

@@ -17,17 +17,14 @@ public class PagamentoReceberTotal {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long pagamentoTotalId;
 	private Integer tipoRegistro;
-	private Integer numeroPV;
-	private String brancos;
+	private Integer codigoPontoVenda;
 	private Date dataCredito;
 	private Double valorTotalCredito;
-	private String brancos2;
 	private Integer numeroBanco;
 	private Integer numeroAgencia;
 	private Integer numeroContaCorrente;
 	private Date dataGeracaoArquivo;
 	private Date dataCreditoAntecipado;
-	private Double valorTotalCreditos;
 
 	public Long getPagamentoTotalId() {
 		return pagamentoTotalId;
@@ -45,21 +42,16 @@ public class PagamentoReceberTotal {
 		this.tipoRegistro = tipoRegistro;
 	}
 
-	public Integer getNumeroPV() {
-		return numeroPV;
+
+
+	public Integer getCodigoPontoVenda() {
+		return codigoPontoVenda;
 	}
 
-	public void setNumeroPV(Integer numeroPV) {
-		this.numeroPV = numeroPV;
+	public void setCodigoPontoVenda(Integer codigoPontoVenda) {
+		this.codigoPontoVenda = codigoPontoVenda;
 	}
 
-	public String getBrancos() {
-		return brancos;
-	}
-
-	public void setBrancos(String brancos) {
-		this.brancos = brancos;
-	}
 
 	public Date getDataCredito() {
 		return dataCredito;
@@ -77,13 +69,7 @@ public class PagamentoReceberTotal {
 		this.valorTotalCredito = valorTotalCredito;
 	}
 
-	public String getBrancos2() {
-		return brancos2;
-	}
-
-	public void setBrancos2(String brancos2) {
-		this.brancos2 = brancos2;
-	}
+	
 
 	public Integer getNumeroBanco() {
 		return numeroBanco;
@@ -123,14 +109,6 @@ public class PagamentoReceberTotal {
 
 	public void setDataCreditoAntecipado(Date dataCreditoAntecipado) {
 		this.dataCreditoAntecipado = dataCreditoAntecipado;
-	}
-
-	public Double getValorTotalCreditos() {
-		return valorTotalCreditos;
-	}
-
-	public void setValorTotalCreditos(Double valorTotalCreditos) {
-		this.valorTotalCreditos = valorTotalCreditos;
 	}
 
 	public Date converteData(String s) {
