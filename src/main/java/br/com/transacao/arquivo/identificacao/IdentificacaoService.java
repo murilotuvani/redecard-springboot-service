@@ -2,8 +2,6 @@ package br.com.transacao.arquivo.identificacao;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,68 +34,38 @@ public class IdentificacaoService {
 	private TransacaoService transacaoService;
 	@Autowired
 	private IdentificaoFileRepository identificacaoFileRepository;
-	@Autowired
-	private IdentificacaoRepository identificacaoRepository;
 
 	private List<RegistroRedecard> recebimentoPagamentoTotal = new ArrayList<RegistroRedecard>();
 	private List<RegistroRedecard> pagamentosProcessados = new ArrayList<RegistroRedecard>();
 	private List<RegistroRedecard> recimentoPagamento = new ArrayList<RegistroRedecard>();
 	private Leitor leitor = new Leitor();
-	private List<Identificacao> arquivosRecebidos = new ArrayList<Identificacao>();
-	private List<File> arquivosRecebidosfile = new ArrayList<File>();
-	private List<RegistroRedecard> listComprovantes = new ArrayList<RegistroRedecard>();
+	private List<RegistroRedecard> listArquivos = new ArrayList<RegistroRedecard>();
 	private List<IdentificacaoFile> identificaoArquivo = new ArrayList<IdentificacaoFile>();
-	private final String DIRETORIO_RAIZ = "C:\\\\Users\\\\kaique.mota\\\\Desktop\\\\Diretorio\\\\";
+	private File[] files;
+	private final String DIRETORIO_RAIZ = "C:\\Users\\Kaique\\Documents\\Trabalho\\";
 	private boolean criaRegistros = false;
 
-	public List<Identificacao> list() {
-		return identificacaoRepository.findAll();
+	private List<IdentificacaoFile> list() {
+		return identificacaoFileRepository.findAll();
 	}
 
-	public void receberArquivo() {
-		List<Identificacao> arquivosJaSalvos = new ArrayList<Identificacao>();
-		List<File> diretorios = new ArrayList<File>();
-		arquivosJaSalvos = list();
-
+	public boolean receberArquivo() {
 		File dir = new File(DIRETORIO_RAIZ);
 
 		if (dir.exists()) {
-
-			File[] files = dir.listFiles();
-
-			if (files.length > 0) {
-				for (File f : files) {
-					Identificacao iden = new Identificacao();
-					File diretorio = new File(DIRETORIO_RAIZ + f.getName());
-					iden.setDiretorio(f.getName());
-					arquivosRecebidos.add(iden);
-					arquivosRecebidosfile.add(diretorio);
-				}
-				Iterator iteretorRecebidos = arquivosRecebidos.iterator();
-				criaRegistros = Collections.disjoint(arquivosRecebidos, arquivosJaSalvos);
-			} else {
-				System.out.println("Diretorio esta vazio!");
-			}
-		} else {
-			System.out.println("Diretorio nao existe!");
+			files = dir.listFiles();
+			criaRegistros = true;
 		}
-		if (criaRegistros) {
-			for (File f : arquivosRecebidosfile) {
-				leitor.defineLeituraArquivo(f);
-				listComprovantes = Leitor.registros.stream().collect(Collectors.toList());
-				salvaHeaderArquivos(listComprovantes);
-				definindoLeituraArquivos(listComprovantes);
-			}
-			saveAll(arquivosRecebidos);
-		}
+		return criaRegistros;
 	}
 
-	private void saveAll(List<Identificacao> arquivosRecebidos2) {
-		identificacaoRepository.saveAll(arquivosRecebidos2);
-	}
+	public List<IdentificacaoFile> salvaHeaderArquivos() {
+		List<RegistroRedecard> rd = new ArrayList<RegistroRedecard>(listArquivos);
 
-	private void salvaHeaderArquivos(List<RegistroRedecard> listComprovantes2) {
-		List<RegistroRedecard> rd = new ArrayList<RegistroRedecard>();
+		for (File f : files) {
+			leitor.defineLeituraArquivo(f);
+			listArquivos = Leitor.registros.stream().collect(Collectors.toList());
+		}
 
 		rd = Leitor.registros.stream()
 				.filter(rs -> rs instanceof Registro002HeaderArquivo || rs instanceof Registro062CabecalhoArquivo
@@ -146,10 +114,17 @@ public class IdentificacaoService {
 			}
 			identificacaoFileRepository.saveAll(identificaoArquivo);
 		}
+		return identificaoArquivo;
 	}
 
-	private void definindoLeituraArquivos(List<RegistroRedecard> listComprovantes) {
-		for (RegistroRedecard r : listComprovantes) {
+	public List<RegistroRedecard> definindoLeituraArquivos() {
+
+		for (File f : files) {
+			leitor.defineLeituraArquivo(f);
+			listArquivos = Leitor.registros.stream().collect(Collectors.toList());
+		}
+
+		for (RegistroRedecard r : listArquivos) {
 			if (r instanceof Registro037TotalizadorCreditos) {
 				recebimentoPagamentoTotal.add(r);
 			}
@@ -169,5 +144,12 @@ public class IdentificacaoService {
 		transacaoService.preencheObjetoTransacao(pagamentosProcessados);
 		pagamentoReceberTotalService.preencheObjetoReceber(recebimentoPagamentoTotal);
 		pagamentoReceberService.preencheObjetoReceber(recimentoPagamento);
+		List<RegistroRedecard> allAdicionados = new ArrayList<RegistroRedecard>();
+
+		allAdicionados.addAll(pagamentosProcessados);
+		allAdicionados.addAll(recebimentoPagamentoTotal);
+		allAdicionados.addAll(recimentoPagamento);
+
+		return allAdicionados;
 	}
 }
