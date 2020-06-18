@@ -14,7 +14,9 @@ import org.springframework.data.annotation.Version;
 
 
 @Entity
-@Table(name = "arquivos_recebidos",uniqueConstraints = @UniqueConstraint(columnNames = {"sequencia_movimento","tipo_registro"}))
+@Table(name = "arquivos_recebidos"
+		, uniqueConstraints = @UniqueConstraint(name = "unk_arqu_rece_sequ_movi", columnNames = { "sequencia_movimento",
+				"tipo_registro" }))
 public class IdentificacaoFile {
 
 	@Id
