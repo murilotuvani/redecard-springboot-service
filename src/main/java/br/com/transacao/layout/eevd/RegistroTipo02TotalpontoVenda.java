@@ -57,6 +57,7 @@ public class RegistroTipo02TotalpontoVenda implements ArquivoEEVD {
     @JoinColumn(name = "cabecalhoArquivo_id")
     private Registro00CabecalhoArquivo cabecalhoArquivo;
     @OneToMany(mappedBy = "filial")
+    @Transient
     private List<RegistroTipo01ResumoVendas> resumoVendas = new ArrayList<>();
 
 

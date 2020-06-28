@@ -38,7 +38,6 @@ public class Processar implements CommandLineRunner {
         File f = new File("C:\\Users\\Kaique\\Documents\\Trabalho\\R97470EEVD17.cmp");
         lista = l.defineLeitura(f);
         System.out.println("");
-
         List<ArquivoEEVD> listEEVD = (List<ArquivoEEVD>) lista;
 
 
@@ -48,10 +47,11 @@ public class Processar implements CommandLineRunner {
         Registro00CabecalhoArquivo arquivo = new Registro00CabecalhoArquivo();
         int i = 0;
         int j = 0;
+
+
         for (ArquivoEEVD a : listEEVD) {
             if (a instanceof Registro00CabecalhoArquivo) {
                 arquivo = (Registro00CabecalhoArquivo) a;
-                registro00Repository.save(arquivo);
             } else if (a instanceof RegistroTipo01ResumoVendas) {
                 resumoVendas.add((RegistroTipo01ResumoVendas) a);
                 j++;
@@ -62,28 +62,20 @@ public class Processar implements CommandLineRunner {
                 arquivo.getFiliais().get(i).setResumoVendas(resumoVendas);
                 resumoVendas = new ArrayList<>();
                 j = 0;
-                registroTipo002Repository.save(arquivo.getFiliais().get(i));
                 i++;
-
-                registroTipo01ResumoVendaRepository.saveAll(resumoVendas);
-
             }
         }
-//        Registro00CabecalhoArquivo arquivo2 = new Registro00CabecalhoArquivo();
-//        registroTipo05ComprovanteRepository.saveAll(arquivo.getFiliais().get(0).getResumoVendas().get(0).getComprovantes());
-//
-////        for (int k = 0; k < arquivo.getFiliais().size(); k++) {
-////            for (int m = 0; m < arquivo.getFiliais().get(k).getResumoVendas().size(); m++) {
-////                registroTipo05ComprovanteRepository.saveAll(arquivo.getFiliais().get(k).getResumoVendas().get(m).getComprovantes());
-////            }
-////            registroTipo01ResumoVendaRepository.saveAll(arquivo.getFiliais().get(k).getResumoVendas());
-////        }
-//        registroTipo002Repository.saveAll(arquivo.getFiliais());
-//        System.out.println();
-//
-//
-//        registro00Repository.save(arquivo);
-//
-//        System.out.println();
+        registro00Repository.save(arquivo);
+        for (RegistroTipo02TotalpontoVenda fa : arquivo.getFiliais()) {
+            registroTipo002Repository.save(fa);
+        }
+        for (RegistroTipo02TotalpontoVenda asda : arquivo.getFiliais()) {
+            registroTipo01ResumoVendaRepository.saveAll(asda.getResumoVendas());
+        }
+        for (int k = 0; k < arquivo.getFiliais().size(); k++) {
+            for (RegistroTipo01ResumoVendas resumoVenda : arquivo.getFiliais().get(k).getResumoVendas()) {
+                registroTipo05ComprovanteRepository.saveAll(resumoVenda.getComprovantes());
+            }
+        }
     }
 }

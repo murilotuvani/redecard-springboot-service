@@ -64,6 +64,7 @@ public class RegistroTipo01ResumoVendas implements ArquivoEEVD {
     @JoinColumn(name = "filial_id")
     private RegistroTipo02TotalpontoVenda filial;
     @OneToMany(mappedBy = "resumoVenda")
+    @Transient
     private List<RegistroTipo05DetalhamentoComprovantes> comprovantes = new ArrayList<>();
 
     @Field(offset = 1, length = 2 , paddingChar = 0, align=Align.RIGHT)

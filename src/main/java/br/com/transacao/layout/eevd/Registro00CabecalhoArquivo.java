@@ -54,6 +54,7 @@ public class Registro00CabecalhoArquivo implements ArquivoEEVD {
     private String tipoProcessamento;
     private String versaoArquivo;
     @OneToMany(mappedBy = "cabecalhoArquivo")
+    @Transient
     private List<RegistroTipo02TotalpontoVenda> filiais = new ArrayList<>();
 
 
