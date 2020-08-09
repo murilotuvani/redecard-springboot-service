@@ -23,12 +23,15 @@
  */
 package br.com.transacao.layout.eevc;
 
+import br.com.transacao.layout.eevd.RegistroTipo01ResumoVendas;
 import br.com.transacao.layout.interfaces.ArquivoEEVC;
 import com.ancientprogramming.fixedformat4j.annotation.Field;
 import com.ancientprogramming.fixedformat4j.annotation.FixedFormatPattern;
 import com.ancientprogramming.fixedformat4j.annotation.Record;
 
+import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 11/02/2020 16:56:24
@@ -36,7 +39,10 @@ import java.util.Date;
  * @author kaique.mota
  */
 @Record
+@Entity
+@Table(name = "eevc_comprovante_parcelado_sem_juros")
 public class Registro12CVnsuparceladosemJuros implements ArquivoEEVC {
+
 
     private Integer tipoRegistro;
     private Integer numeroPV;
@@ -51,7 +57,11 @@ public class Registro12CVnsuparceladosemJuros implements ArquivoEEVC {
     private Integer numeroCVnsu;
     private Integer numeroReferencia;
     private Double valorDesconto;
+    @Id
     private String numeroAutorizacao;
+    @OneToMany
+    @JoinColumn(name = "comprovante_semJuros_id")
+    private List<Registro014ParcelosemJuros> listParcelasComprovantes;
     private Integer horaTransacao;
     private String numeroBilhete;
     private String numeroBilhete2;

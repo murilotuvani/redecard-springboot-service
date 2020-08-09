@@ -42,7 +42,7 @@ import java.util.List;
  */
 @Record
 @Entity
-@Table(name = "resumo_venda")
+@Table(name = "eevd_resumo_venda")
 public class RegistroTipo01ResumoVendas implements ArquivoEEVD {
 
     private Integer tipoRegistro;

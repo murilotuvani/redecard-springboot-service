@@ -27,14 +27,21 @@ import br.com.transacao.layout.interfaces.ArquivoEEVC;
 import com.ancientprogramming.fixedformat4j.annotation.Field;
 import com.ancientprogramming.fixedformat4j.annotation.Record;
 
+import javax.persistence.*;
+
 /**
  * 12/02/2020 09:47:46
  *
  * @author kaique.mota
  */
 @Record
+@Entity
+@Table(name = "eevc_trailer")
 public class Registro028TrailerArquivo implements ArquivoEEVC {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id ;
     private Integer tipoRegistro;
     private Integer quantidadeMatrizes;
     private Integer quantidadeRegistros;

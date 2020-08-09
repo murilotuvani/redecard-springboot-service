@@ -39,7 +39,7 @@ import java.util.Date;
  */
 @Record
 @Entity
-@Table(name = "comprovante_venda")
+@Table(name = "eevd_comprovante_venda")
 public class RegistroTipo05DetalhamentoComprovantes implements ArquivoEEVD {
 
     private Integer tipoRegistro;

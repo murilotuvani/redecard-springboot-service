@@ -28,6 +28,9 @@ import com.ancientprogramming.fixedformat4j.annotation.Field;
 import com.ancientprogramming.fixedformat4j.annotation.FixedFormatPattern;
 import com.ancientprogramming.fixedformat4j.annotation.Record;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
 
 /**
@@ -36,6 +39,8 @@ import java.util.Date;
  * @author kaique.mota
  */
 @Record
+@Entity
+@Table(name = "eevc_comprovantes_rotativos")
 public class Registro008CVnsuRotativo implements ArquivoEEVC {
 
     private Integer tipoRegistro;
@@ -47,6 +52,7 @@ public class Registro008CVnsuRotativo implements ArquivoEEVC {
     private Double valorGorgeta;
     private String numeroCartao;
     private String statusCVnsu;
+    @Id
     private Integer numeroCVnsu;
     private String numeroReferencia;
     private Double valorDesconto;

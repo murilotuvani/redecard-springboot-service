@@ -28,7 +28,10 @@ import com.ancientprogramming.fixedformat4j.annotation.Field;
 import com.ancientprogramming.fixedformat4j.annotation.FixedFormatPattern;
 import com.ancientprogramming.fixedformat4j.annotation.Record;
 
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 11/02/2020 15:33:57
@@ -36,11 +39,17 @@ import java.util.Date;
  * @author kaique.mota
  */
 @Record
+@Entity
+@Table(name = "eevc_resumo_rotativo")
 public class Registro006RVrotativo implements ArquivoEEVC {
 
     private Integer tipoRegistro;
     private Integer numeroPV;
+    @Id
     private Integer numeroRV;
+    @OneToMany
+    @JoinColumn(name = "resumo_venda_rotativo")
+    private List<Registro008CVnsuRotativo> comprovantes = new ArrayList<>();
     private Integer numeroBanco;
     private Integer numeroAgencia;
     private Integer numContaCorrente;
@@ -189,6 +198,26 @@ public class Registro006RVrotativo implements ArquivoEEVC {
 
     public void setBandeira(String bandeira) {
         this.bandeira = bandeira;
+    }
+
+    public void addComprovante(Registro008CVnsuRotativo a) {
+        comprovantes.add(a);
+    }
+
+    public Integer getNumeroPV() {
+        return numeroPV;
+    }
+
+    public void setNumeroPV(Integer numeroPV) {
+        this.numeroPV = numeroPV;
+    }
+
+    public List<Registro008CVnsuRotativo> getComprovantes() {
+        return comprovantes;
+    }
+
+    public void setComprovantes(List<Registro008CVnsuRotativo> comprovantes) {
+        this.comprovantes = comprovantes;
     }
 
     @Override

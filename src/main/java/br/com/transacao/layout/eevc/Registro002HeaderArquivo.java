@@ -29,6 +29,9 @@ import com.ancientprogramming.fixedformat4j.annotation.Field;
 import com.ancientprogramming.fixedformat4j.annotation.FixedFormatPattern;
 import com.ancientprogramming.fixedformat4j.annotation.Record;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
 
 /**
@@ -38,14 +41,17 @@ import java.util.Date;
  * @author murilotuvani
  */
 @Record
+@Entity(name = "eevc_header")
+@Table(name = "eevc_header")
 public class Registro002HeaderArquivo implements ArquivoEEVC {
 
+    @Id
+    private Integer sequenciaMovimento;
     private Integer tipoRegistro;
     private Date dataEmissao;
     private String adquirente;
     private String extratoEletronicoVendas;
     private String nomeComercial;
-    private Integer sequenciaMovimento;
     private Integer nPVgrupoMatriz;
     private String tipoMovimento;
     private String versaoArquivo;

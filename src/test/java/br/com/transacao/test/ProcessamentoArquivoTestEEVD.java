@@ -1,4 +1,8 @@
-package br.com.transacao.processamento;
+package br.com.transacao.test;
+
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import br.com.transacao.layout.Leitor;
 import br.com.transacao.layout.eevd.Registro00CabecalhoArquivo;
@@ -6,17 +10,28 @@ import br.com.transacao.layout.eevd.RegistroTipo01ResumoVendas;
 import br.com.transacao.layout.eevd.RegistroTipo02TotalpontoVenda;
 import br.com.transacao.layout.eevd.RegistroTipo05DetalhamentoComprovantes;
 import br.com.transacao.layout.interfaces.ArquivoEEVD;
-import br.com.transacao.repository.*;
+import br.com.transacao.repository.Registro00Repository;
+import br.com.transacao.repository.RegistroTipo01ResumoVendaRepository;
+import br.com.transacao.repository.RegistroTipo02Repository;
+import br.com.transacao.repository.RegistroTipo05ComprovanteRepository;
+import org.junit.FixMethodOrder;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Processar  {
-
+@ActiveProfiles("dev")
+@SpringBootTest
+@RunWith(SpringRunner.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+public class ProcessamentoArquivoTestEEVD {
     private static List<?> lista = new ArrayList<>();
 
     @Autowired
@@ -28,11 +43,17 @@ public class Processar  {
     @Autowired
     private RegistroTipo05ComprovanteRepository registroTipo05ComprovanteRepository;
 
+    @Test
+    public void testVerificacaoExistenciaArquivo_01() {
+        File f = new File("C:\\Users\\Kaique\\Documents\\Trabalho\\redecard-springboot-service\\src\\test\\ArquivosTest\\R97470EEVD17.cmp");
+        assertTrue(f.exists());
+        System.out.println("PATH = " + f.getAbsolutePath());
+    }
 
-    public void run(String... args) throws Exception {
-
+    @Test
+    public void testProcessamento_02() {
         Leitor l = new Leitor();
-        File f = new File("C:\\Users\\Kaique\\Documents\\Trabalho\\R97470EEVD17.cmp");
+        File f = new File("C:\\Users\\Kaique\\Documents\\Trabalho\\redecard-springboot-service\\src\\test\\ArquivosTest\\R97470EEVD17.cmp");
         lista = l.defineLeitura(f);
         System.out.println("");
         List<ArquivoEEVD> listEEVD = (List<ArquivoEEVD>) lista;
@@ -47,6 +68,8 @@ public class Processar  {
 
 
         for (ArquivoEEVD a : listEEVD) {
+            listEEVD.stream().forEach(ab -> {
+            });
             if (a instanceof Registro00CabecalhoArquivo) {
                 arquivo = (Registro00CabecalhoArquivo) a;
             } else if (a instanceof RegistroTipo01ResumoVendas) {

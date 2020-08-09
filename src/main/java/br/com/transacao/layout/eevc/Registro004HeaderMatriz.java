@@ -27,15 +27,22 @@ import br.com.transacao.layout.interfaces.ArquivoEEVC;
 import com.ancientprogramming.fixedformat4j.annotation.Field;
 import com.ancientprogramming.fixedformat4j.annotation.Record;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * 11/02/2020 12:19:54
  *
  * @author kaique.mota
  */
 @Record
+@Entity
+@Table(name = "eevc_filial")
 public class Registro004HeaderMatriz implements ArquivoEEVC {
 
     private Integer tipoRegistro;
+    @Id
     private String nPVMatriz;
     private String nomeComercialMatriz;
 

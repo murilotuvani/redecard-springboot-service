@@ -40,7 +40,7 @@ import java.util.List;
  */
 @Record
 @Entity
-@Table(name = "cabecalho")
+@Table(name = "eevd_cabecalho")
 public class Registro00CabecalhoArquivo implements ArquivoEEVD {
     @Id
     private Long sequencia;

@@ -28,6 +28,7 @@ import com.ancientprogramming.fixedformat4j.annotation.Field;
 import com.ancientprogramming.fixedformat4j.annotation.FixedFormatPattern;
 import com.ancientprogramming.fixedformat4j.annotation.Record;
 
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -36,8 +37,13 @@ import java.util.Date;
  * @author kaique.mota
  */
 @Record
+@Entity
+@Table(name = "eevc_comprovantes_parcelas_sem_juros")
 public class Registro014ParcelosemJuros implements ArquivoEEVC {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	private Integer tipoRegistro;
 	private Integer numeroPV;
 	private Integer numeroRV;

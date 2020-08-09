@@ -27,14 +27,21 @@ import br.com.transacao.layout.interfaces.ArquivoEEVC;
 import com.ancientprogramming.fixedformat4j.annotation.Field;
 import com.ancientprogramming.fixedformat4j.annotation.Record;
 
+import javax.persistence.*;
+
 /**
  * 12/02/2020 09:33:11
  *
  * @author kaique.mota
  */
 @Record
+@Entity
+@Table(name = "eevc_total_matriz")
 public class Registro026TotalizadorMatriz implements ArquivoEEVC {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private Integer tipoRegistro;
     private String nPVmatriz;
     private Double valorBruto;
