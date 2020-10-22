@@ -23,15 +23,21 @@
  */
 package br.com.transacao.layout.eevc;
 
-import br.com.transacao.layout.eevd.RegistroTipo01ResumoVendas;
-import br.com.transacao.layout.interfaces.ArquivoEEVC;
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 import com.ancientprogramming.fixedformat4j.annotation.Field;
 import com.ancientprogramming.fixedformat4j.annotation.FixedFormatPattern;
 import com.ancientprogramming.fixedformat4j.annotation.Record;
 
-import javax.persistence.*;
-import java.util.Date;
-import java.util.List;
+import br.com.transacao.layout.interfaces.ArquivoEEVC;
 
 /**
  * 11/02/2020 16:56:24
@@ -60,7 +66,7 @@ public class Registro12CVnsuparceladosemJuros implements ArquivoEEVC {
     @Id
     private String numeroAutorizacao;
     @OneToMany
-    @JoinColumn(name = "comprovante_semJuros_id")
+    @JoinColumn(name = "comprovante_semJuros_id", foreignKey = @ForeignKey(name = "fk_baninha"))
     private List<Registro014ParcelosemJuros> listParcelasComprovantes;
     private Integer horaTransacao;
     private String numeroBilhete;
